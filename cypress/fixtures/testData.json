@@ -1,0 +1,13 @@
+{
+  "username": "qa.test.213@medchart.com",
+  "password": "P@ssword99", 
+  "state": "Alabama",
+	"provider" : "GLENN DELP",
+	"clientID" : "12345x",
+  "fromDate":"10/12/2021",
+  "toDate":"12/10/2021",
+  "updatedFromDate":"11/30/2021", 
+  "updatedToDate": "12/05/2021",
+  "MRN":"1234qaxc"
+  
+}
