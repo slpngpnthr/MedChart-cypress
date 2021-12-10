@@ -22,8 +22,8 @@ class ClientInfoPage {
         return cy.contains('td', clientInfo);
     }
 
-    getNewRequestButton(){
-        return cy.contains('button',  'New Request');
+    clickNewRequestButton(){
+        cy.contains('button',  'New Request').click();
     }
     
 }

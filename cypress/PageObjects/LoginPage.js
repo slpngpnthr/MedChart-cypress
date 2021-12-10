@@ -13,6 +13,14 @@ class LoginPage {
         return cy.get('#Input_Password')
     }
 
+    enterEmail(username){
+        cy.get('#Input_Email').type(username);
+    }
+
+    enterPassword(pw){
+        cy.get('#Input_Password').type(pw);
+    }
+
     clickLoginButton(){
         cy.contains('button', 'Log in').click();
     }

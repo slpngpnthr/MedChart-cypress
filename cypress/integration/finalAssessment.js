@@ -41,14 +41,9 @@ describe('Assessment', () => {
         //Login Page
 		loginPage.getPageHeader()
             .invoke('text')
-            .should('equal', loginPage.pageHeader);
-        
-        loginPage.getEmailTextBox()
-			.type(this.data.username);
-        
-        loginPage.getPasswordTextBox()
-            .type(this.data.password);
-    
+            .should('equal', loginPage.pageHeader);        
+        loginPage.enterEmail(this.data.username);        
+        loginPage.enterPassword(this.data.password);    
         loginPage.clickLoginButton();
         	
 		
@@ -59,37 +54,28 @@ describe('Assessment', () => {
 			.invoke('text')
 			.should('equal', cSearchPage.pageHeader);
 
-		cSearchPage.getSearchTextBox()
-			.type(this.data.clientID);
-					
-        cSearchPage.getClientRecordFromTable(this.data.clientID)
-			.should('have.text', this.data.clientID)
-			.click();
-
+		//Enter search criteria and select patient
+		cSearchPage.enterTextinSearch(this.data.clientID);					
+        cSearchPage.clickClientRecordinSearch(this.data.clientID);
         cinfoPage.getPageHeader()
             .invoke('text')
 			.should('contains', cinfoPage.pageHeader);
 		
-		//Step#2
-		cinfoPage.getNewRequestButton()
-			.click();
-
-		//Verify We are in correct page 
+		//Step#2 click New Request button
+		cinfoPage.clickNewRequestButton();
 		searchProviderPage.getPageHeader()
 			.invoke('text')
 			.should('contains', searchProviderPage.pageHeader);
 		
-		//Select State 
+		//Enter State and init Search
 		searchProviderPage.setState(this.data.state);
 		searchProviderPage.clickSearchButton()					
-		
-        searchProviderPage.getAllProviderRows()
+		searchProviderPage.getAllProviderRows() //assert there are results
 			.its('length')
-			.should('be.gt', 0); //the search result should have > 0 rows
+			.should('be.gt', 0); 
             
 		//Step#3 Select the provider
-		searchProviderPage.getProviderFromSearchResultByName(this.data.provider)
-			.click(); 
+		searchProviderPage.clickProviderinSearchResultByName(this.data.provider);
 		
 		//Step#4 clicks on all checkboxes
 
@@ -105,39 +91,25 @@ describe('Assessment', () => {
 			.invoke('text')
 			.should('contains', newRequestPages.chkBoxPanelHeader);
 		
-		newRequestPages.getAllServiceChkboxes()
-			.check();  
-		
-		//clicks on Next button
+		newRequestPages.checkAllServiceChkBoxes()
 		newRequestPages.clickNextButton()
-			
 		
 		//Step#5 
-		newRequestPages.getMRNTextField() // Set MRN 
-			.clear()
-			.type(this.data.MRN); // 
-		newRequestPages.getFromDateTextField()
-			.type(this.data.fromDate); //From date
-		
-		newRequestPages.getToDateTextField()
-			.type(this.data.toDate+ '{Enter}'); // To date		 
-		
+		newRequestPages.getMRNTextField(this.data.MRN); // set MRN
+		newRequestPages.setFromDateTextField(this.data.fromDate+ '{Enter}'); // From date
+		newRequestPages.setToDateTextField(this.data.toDate + '{Enter}'); // To date	
 		newRequestPages.clickNextButton()
-			
 		 
 		//Step #6
 		newRequestPages.clickAddToActionItemsButton();			
 		
 		//Init reqID Alias to be used later
 		newRequestPages.setRequestIDFromAlert();
-			
-
 		newRequestPages.getAlertWithProviderDetail()
 			.invoke('text')
 			.should('contains', this.data.provider);
-			
-		 
-		//Step#7 Navigate to Action Items page 
+
+     	//Step#7 Navigate to Action Items page 
 		commonActions.clickActionItems();
 		
 		//Verify We are in correct page 
@@ -154,9 +126,9 @@ describe('Assessment', () => {
 		//Verify all 3 options are displayed n the dropdown
 		 cy.contains('span', 'Edit Request').should('be.visible');
 		 cy.contains('span', 'Request Details').should('be.visible');
-		 cy.contains('span', 'Edit Request').should('be.visible');
-		   //click on Edit Request
-		
+		 cy.contains('span', 'Delete Request').should('be.visible');
+	
+		//click on Edit Request
 		cy.contains('span', 'Edit Request').click();
 
 		//Ste#9 Verify Request Details (Edit Request) 	dialog is open

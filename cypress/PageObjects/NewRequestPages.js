@@ -20,6 +20,9 @@ class NewRequestPages {
     clickReviewandSubmitButton(){
         cy.contains('button', 'Review & Submit').click();
     }
+    checkAllServiceChkBoxes(){
+        cy.get('[type="checkbox"]').check();
+    }
 
     getNRSelectPageHeader(){
         return cy.get('h3');
@@ -101,6 +104,19 @@ class NewRequestPages {
     getAlertWithProviderDetail(){
         return cy.get('div[role="alert"]')
                 .eq(0);
+    }
+
+    setMRNTextField(mrn){
+        cy.get('.ml-2 > .form-control')
+        .clear().type(mrn);
+    }
+
+    setFromDateTextField(date){
+        
+        cy.get(this.fromDateSelector).type(date);
+    }
+    setToDateTextField(date){
+        cy.get(this.toDateSelector).type(date);
     }
 
     //improve: to wait until the Alert with ID is 

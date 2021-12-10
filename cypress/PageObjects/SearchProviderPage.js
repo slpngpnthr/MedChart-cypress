@@ -24,6 +24,10 @@ pageHeader = 'New Request';
     {
         return cy.contains(provider);
     }
+    clickProviderinSearchResultByName(provider)
+    {
+        cy.contains(provider).click();
+    }
    
 }
 export default SearchProviderPage
